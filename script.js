@@ -1,11 +1,11 @@
 var questions = [{
 	question: "What street had the first traffic light in the world?",
 	choices: ["Superior", "East 105", "Carnegie", "Euclid"],
-	correctAnswer: 2
+	correctAnswer: 1
 }, {
 	question: "How many games were sold out in a row at Jacobs Field?",
 	choices: ["63", "351", "455", "682"],
-	correctAnswer: 3
+	correctAnswer: 2
 }];
 
 var currentQuestion = 0;
@@ -44,3 +44,38 @@ $(document).ready(function () {
 		}
 	});
 });
+
+function displayCurrentQuestion() {
+
+	console.log("In display current Question");
+
+	var question = questions[currentQuestion].question;
+	var questionClass = $(document).find(".quizContainer > .question");
+	var choiceList = $(document).find(".quizContainer > .choiceList");
+	var numChoices = questions[currentQuestion].choices.length;
+
+	$(questionClass).text(question);
+
+	$(choiceList).find("li").remove();
+
+	var choice;
+	for (i =0; i < numChoices; i++) {
+		choice = questions[currentQuestion].choices[i];
+		$('<li><input type="radio" value=' + i + ' name="dynradio" />)' + choice + '</li>').appendTo(choiceList);
+	}
+}
+
+function resetQuiz() {
+	currentQuestion = 0;
+	correctAnswers = 0;
+	hideScore();
+}
+
+function displayScore() {
+	$(document).find(".quizContainer > .result").text("You scored: " + correctAnswers + " out of: " + questions.length);
+	$(document).find(".quizContainer > .result").show();
+}
+
+function hideScore() {
+	$(document).find(".result").hide();
+}
